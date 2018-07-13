@@ -1,0 +1,7 @@
+{
+  "client_id": "96f9c17d-5053-409b-9a45-83ddc53df12d",
+  "client_secret": "1aff256d-726a-4a0a-bebf-f8049fb2bd19",
+  "tenant_id": "9bcb323d-7fa3-45e7-a36f-6d9cfdbcc272",
+  "subscription_id": "3f7636ed-e979-49fc-944c-06bc9563974e",
+  "managed_image_resource_group_name": "myResourceGroup"
+}

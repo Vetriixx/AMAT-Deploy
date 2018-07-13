@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 echo "START SCRIPT 4"
 
@@ -32,14 +32,10 @@ sudo chmod -R 777 /var/www/MISP
 sudo chmod +x /var/www/MISP/app/Console/worker/start.sh
 sudo ex -sc '13i|sudo -u www-data bash /var/www/MISP/app/Console/worker/start.sh' -cx /etc/rc.local
 # And manually start the workers right now
-sudo -u www-data bash /var/www/MISP/app/Console/worker/start.sh
+#sudo -u www-data bash /var/www/MISP/app/Console/worker/start.sh
 
 # Restart apache2 for the final time.
 sudo service apache2 reload
 sudo service apache2 restart
-
-# We need to open the webpage for MISP to generate data in the database
-wget 127.0.0.1
-rm index.html
 
 echo "END SCRIPT 4"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 # Author: samwakel
 #
 # These scripts will install and configure MISP on a fresh install of Ubuntu Server 16.04.
@@ -24,7 +24,7 @@ sudo -u www-data mkdir /var/www/MISP/.gnupg
 # Don't change the timeout because if it times out then it will not output the gpg key.
 echo "Generating GPG key, this can take anywhere between a few seconds to multiple days."
 GPG_KEY=$(expect -c "
-set timeout 5
+set timeout 10
 spawn sudo -u www-data gpg --homedir /var/www/MISP/.gnupg --gen-key
 expect \"Your selection?\"
 send \"\r\"

@@ -1,0 +1,47 @@
+{
+  "builders": [{
+
+    "client_id": "96f9c17d-5053-409b-9a45-83ddc53df12d",
+    "client_secret": "1aff256d-726a-4a0a-bebf-f8049fb2bd19",
+    "tenant_id": "9bcb323d-7fa3-45e7-a36f-6d9cfdbcc272",
+    "subscription_id": "3f7636ed-e979-49fc-944c-06bc9563974e",
+    
+    "name": "misp",
+    "type": "azure-arm",
+    "os_type": "Linux",
+    "image_publisher": "Canonical",
+    "image_offer": "UbuntuServer",
+    "image_sku": "16.04-LTS",
+
+    "managed_image_resource_group_name": "AMAT",
+    "managed_image_name": "MISP",
+
+    "ssh_username": "misp",
+    "ssh_password": "misp",
+    "ssh_timeout": "15m",
+    
+    "azure_tags": {
+    "dept": "Engineering",
+    "task": "Image deployment"
+    },
+
+    "location": "australiasoutheast",
+    "vm_size": "Standard_DS2_v2"
+  }],
+
+  "provisioners": [
+   {
+     "type": "file",
+     "source": "scripts/Network.conf",
+     "destination": "/tmp/"
+     },
+    {
+      "type": "shell",
+      "scripts": [
+      "scripts/MISP_Part1.sh", "scripts/MISP_Part2.sh", "scripts/MISP_Part3.sh", "scripts/MISP_Part4.sh", "scripts/GPG_Creation.sh"
+      ],
+      "execute_command": "echo 'misp' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
+    }
+  ]
+}
+

@@ -32,6 +32,3 @@ sudo systemctl enable viper
 sudo systemctl start viper
 sudo systemctl start viper_web
 sudo systemctl start viper_api
-
-source /tmp/Network.conf
-cat /etc/network/interfaces | sudo sed -i s/dhcp/static/ > sudo /etc/network/interfaces; echo -e "     address $vip_address\n     netmask $vip_netmask\n     network $vip_network\n     broadcast $vip_broadcast\n     gateway $vip_gateway\n     dns-nameservers $vip_dns" | sudo tee -a /etc/network/interfaces

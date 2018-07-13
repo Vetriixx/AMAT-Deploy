@@ -72,7 +72,7 @@ printf "upstream fame {\n\tserver unix:///tmp/fame.sock;\n}\n\nserver {\n\tliste
 sudo ln -s /etc/nginx/sites-available/fame /etc/nginx/sites-enabled/fame
 sudo systemctl restart nginx
 
-api="$(echo -e "use fame\ndb.users.distinct(\"api_key\")\n" | mongo | grep -o '".*"' | sed 's/"//g')"
+api="$(echo -e "use fame\ndb.users.distinct(\"api_key\")\n"" | mongo | grep -o '".*"' | sed 's/"//g')""
 
 curl -XPOST -H "X-API-KEY: $api" 'http://127.0.0.1/modules/reload'
 

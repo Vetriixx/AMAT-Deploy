@@ -1,0 +1,55 @@
+{
+
+
+  "builders": [{
+   
+    "client_id": "{{user `client_id`}}",
+    "client_secret": "{{user `client_secret`}}",
+    "tenant_id": "{{user `tenant_id`}}",
+    "subscription_id": "{{user `subscription_id`}}",
+    "managed_image_resource_group_name": "{{user `managed_image_resource_group_name`}}",
+    "managed_image_name": "FAME",
+
+    "name": "fame",
+    "type": "azure-arm",
+    "os_type": "Linux",
+    "image_publisher": "Canonical",
+    "image_offer": "UbuntuServer",
+    "image_sku": "16.04-LTS",
+
+    "ssh_username": "fame",
+    "ssh_password": "fame",
+    "ssh_timeout": "15m",
+    
+    "azure_tags": {
+    "dept": "Engineering",
+    "task": "Image deployment"
+    },
+
+    "location": "australiasoutheast",
+    "vm_size": "Standard_DS2_v2"
+  }],
+
+    
+
+  "provisioners": [
+   {
+     "type": "file",
+     "source": "scripts/Network.conf",
+     "destination": "/tmp/"
+     },
+    {
+     "type": "file",
+     "source": "/home/user/Desktop/AMAT-Deploy/FAME/Modules",
+     "destination": "/home/fame"
+     },
+    {
+      "type": "shell",
+      "scripts": [
+      "scripts/FAME_Install.sh"
+      ],
+
+      "execute_command": "echo 'fame' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
+    }
+  ]
+}

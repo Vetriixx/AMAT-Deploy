@@ -58,7 +58,7 @@
      },
     {
      "type": "file",
-     "source": "~/AMAT-Deploy/Honeybox/",
+     "source": "/home/user/AMAT-Deploy/Honeybox/",
      "destination": "/home/dionaea"
      },
     {

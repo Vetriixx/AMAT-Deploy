@@ -1,26 +1,26 @@
 {
   "builders": [{
-    "name": "cuckoo",
-    "vm_name": "cuckoo",
+    "name": "mastiff",
+    "vm_name": "mastiff",
     "type": "vmware-iso",
     "guest_os_type": "ubuntu-64",
 
     "tools_upload_path": "/vmfs/volumes/5a52b220-262fa371-1806-90e2ba4d3224/packages/6.5.0/vmtools/linux.iso",
     "vnc_disable_password": true,
     "headless": false,
-    "disk_size": "204800",
-    "iso_url": "http://au.releases.ubuntu.com/16.04/ubuntu-16.04.3-server-amd64.iso",
-    "iso_checksum": "a06cd926f5855d4f21fb4bc9978a35312f815fbda0d0ef7fdc846861f4fc4600",
+    "disk_size": "21440",
+    "iso_url": "http://au.releases.ubuntu.com/16.04/ubuntu-16.04.4-server-amd64.iso",
+    "iso_checksum": "0a03608988cfd2e50567990dc8be96fb3c501e198e2e6efcb846d89efc7b89f2",
     "iso_checksum_type": "sha256",
 
-    "ssh_username": "cuckoo",
-    "ssh_password": "cuckoo",
+    "ssh_username": "mastiff",
+    "ssh_password": "mastiff",
     "ssh_timeout": "15m",
-
+   
     "disk_type_id": "thin",
 
     "floppy_files": [
-      "preseed/cuckoo.cfg"
+      "preseed/mastiff.cfg"
     ],
 
     "boot_command": [
@@ -29,9 +29,9 @@
       "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
       "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
       "/install/vmlinuz noapic ",
-      "preseed/file=/floppy/cuckoo.cfg ",
+      "preseed/file=/floppy/mastiff.cfg ",
       "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
-      "hostname={{.Name}} ",
+      "hostname={{ .Name }} ",
       "fb=false debconf/frontend=noninteractive ",
       "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
       "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
@@ -39,7 +39,7 @@
       "initrd=/install/initrd.gz -- <enter>"
     ],
 
-    "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo 'cuckoo'|sudo -S sh 'shutdown.sh'",
+    "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo 'mastiff'|sudo -S sh 'shutdown.sh'",
 
     "remote_type": "esx6.5",
     "remote_host": "{{user `esxi_host`}}",
@@ -51,8 +51,7 @@
     "vmx_data": {
     "ethernet0.networkName": "VM Network",
     "memsize": "8196",
-    "numvcpus": "8",
-    "vhv.enable": "TRUE"
+    "numvcpus": "8"
     }
   }],
 
@@ -62,18 +61,13 @@
      "source": "scripts/Network.conf",
      "destination": "/tmp/"
      },
-      {
-     "type": "file",
-     "source": "~/AMAT-Deploy/Cuckoo/",
-     "destination": "/home/cuckoo/"
-     },
     {
       "type": "shell",
       "scripts": [
-        "scripts/open-vm-tools.sh", "scripts/Cuckoo_Install.sh"
+        "scripts/open-vm-tools.sh", "scripts/Mastiff_Install.sh"
       ],
 
-      "execute_command": "echo 'cuckoo' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
+      "execute_command": "echo 'mastiff' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
     }
   ]
 }
