@@ -8,16 +8,17 @@ import requests
 
 def get_api_key():
     #Gets MISP API key
-    SQL_HOST='192.168.54.112'
+    SQL_HOST='misp_ip'
     api_file = open("/tmp/.donotopen", "w")
     with SSHTunnelForwarder(
         SQL_HOST,
         ssh_username="misp",   # auto script to have fame + fame
         ssh_password="misp",
+	local_bind_address=('127.0.0.1', 3306),
         remote_bind_address=('127.0.0.1', 3306)
     ) as server:
             server.start()
-            cnx = connection = MySQLdb.connect(user='misp', passwd='misp', db='misp', host='192.168.54.112', port=3306)
+            cnx = connection = MySQLdb.connect(user='misp', passwd='misp', db='misp', host='127.0.0.1', port=3306)
             cursor = cnx.cursor()
             cursor.execute("SELECT authkey FROM users")
             # Get and display one row at a time
@@ -30,18 +31,6 @@ def get_api_key():
     
     server.stop()
     api_file.close()
-
-
-# fixed above with:
-#following https://stackoverflow.com/questions/1559955/host-xxx-xx-xxx-xxx-is-not-allowed-to-connect-to-this-mysql-server
-# https://github.com/docker-library/mariadb/issues/48
-
-#mysql> CREATE USER 'misp'@'192.168.54.112' IDENTIFIED BY 'misp';
-#mysql> GRANT ALL PRIVILEGES ON *.* TO 'misp'@'192.168.54.112' WITH GRANT OPTION;
-
-#mysql> CREATE USER 'misp'@'%' IDENTIFIED BY 'misp';
-#mysql> GRANT ALL PRIVILEGES ON *.* TO 'misp'@'%' WITH GRANT OPTION;
-
 
 def api_check():
     try:
@@ -271,7 +260,7 @@ def create_misp_report(report):
 
     #cuckoo object
     template['Event']['Object'][0]['Attribute'][0]['value'] = report['malscore'] # sandbox-report score  
-    template['Event']['Object'][0]['Attribute'][3]['value']# = report #raw-report
+    #template['Event']['Object'][0]['Attribute'][3]['value'] = report #raw-report
 
     #virustotal object
     template['Event']['Object'][1]['Attribute'][0]['value'] = report['virustotal']['permalink'] # virustotal-report link
@@ -291,14 +280,14 @@ def create_misp_report(report):
 
 def get_cuckoo_json():
     id = get_cuckoo_idList()
-    url = "http://192.168.54.51:8090/tasks/report/" + str(id)
+    url = "http://cuckoo_ip:8090/tasks/report/" + str(id)
     r = requests.get(url)
     report = json.loads(r.text)
     return report
 
 
 def get_cuckoo_idList():
-    url = "http://192.168.54.51:8090/tasks/list"
+    url = "http://cuckoo_ip:8090/tasks/list"
     r = requests.get(url)
     task = json.loads(r.text)
     id = task["tasks"][-1]['guest']['task_id']
@@ -345,6 +334,6 @@ def post_report(api, misp_report):
     "Accept": "application/json",
     "content-type": "application/json"
     }
-    endpoint = "http://192.168.54.112/events"
+    endpoint = "http://misp_ip/events"
     r = requests.post(endpoint, headers=headers, json=misp_report)
     return r

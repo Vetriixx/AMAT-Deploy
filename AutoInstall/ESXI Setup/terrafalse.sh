@@ -8,12 +8,12 @@ if [ $EUID -ne 0 ]; then
 	exit 1
 fi
 
-	./packer build -var-file variables.json FameVM.json
+#	./packer build -var-file variables.json FameVM.json
 	./packer build -var-file variables.json CuckooVM.json
-	./packer build -var-file variables.json ViperVM.json
-	./packer build -var-file variables.json MastiffVM.json
-	./packer build -var-file variables.json MispVM.json
-	./packer build -var-file variables.json DionaeaVM.json
+#	./packer build -var-file variables.json ViperVM.json
+#	./packer build -var-file variables.json MastiffVM.json
+#	./packer build -var-file variables.json MispVM.json
+#	./packer build -var-file variables.json DionaeaVM.json
 	
 	#Test vm for testing (obvs)
 	#./packer build -var-file variables.json test.json

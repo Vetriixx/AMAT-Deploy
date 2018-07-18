@@ -34,13 +34,13 @@
   "provisioners": [
    {
      "type": "file",
-     "source": "scripts/Network.conf",
+     "source": "scripts/Azure_Network.conf",
      "destination": "/tmp/"
      },
     {
       "type": "shell",
       "scripts": [
-      "scripts/Viper_Install.sh"
+      "scripts/Azure_Viper_Install.sh"
       ], 
       "execute_command": "echo 'viper' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
     }

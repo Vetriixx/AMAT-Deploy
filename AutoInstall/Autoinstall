@@ -1,0 +1,99 @@
+Code Process:
+
+
+Welcome
+
+1. Host Information
+
+	IP Address:
+
+	Port:
+
+	Username:
+
+	Password:
+
+	Datastore:
+
+
+2. Do you have your own ISO you wish to install for the VMs Operating System? 
+		(Honeypots must be 14.04)
+
+	Yes: 
+	Please put a URL or file path to get the ISO
+
+	No: (Recommended)
+	Using stable Ubuntu Server 16.04
+
+
+3. Please Up the IP you wish to assign each VM
+	Note: Recommended to be on the same subnet (i.e 192.168.58.***)
+
+	output: Increment
+
+	Dionea: "input"
+	MASTIFF: "Input"
+	FAME: "Input"
+	MISP: "Input"
+	Viper: "Input"
+	Cuckoo: "Input"
+
+
+4.  use the Login credentials to make an SSH connection to do the following:
+
+	Enable "Guest IP Hack"
+
+	Run: esxcli system settings advanced set -o /Net/GuestIPHack -i 1
+
+
+	Enable VNC
+	Run: chmod 644 /etc/vmware/firewall/service.xml
+
+	Run: chmod +t /etc/vmware/firewall/service.xml
+
+	Edit: /etc/vmware/firewall/service.xml
+
+	Append: before </config>
+	<service id="1000">
+	  <id>packer-vnc</id>
+	  <rule id="0000">
+	    <direction>inbound</direction>
+	    <protocol>tcp</protocol>
+	    <porttype>dst</porttype>
+	    <port>
+	      <begin>5900</begin>
+	      <end>6000</end>
+	    </port>
+	  </rule>
+	  <enabled>true</enabled>
+	  <required>true</required>
+	</service>
+
+	Run: chmod 444 /etc/vmware/firewall/service.xml
+
+	Run: esxcli network firewall refresh
+
+
+
+5. Download Prerequisites and put them in the same location as the 
+	AMAT-Deploy/Autoinstall/Masterinstall
+	
+	Download locations
+
+	https://github.com/martezr/packer-builder-vsphere/releases/download/v1.5/packer-builder-vsphere-iso.linux
+
+	https://releases.hashicorp.com/packer/1.1.0/packer_1.1.0_linux_amd64.zip
+
+	Run: Sudo apt-get install sshpass
+
+	Extract: Packer to master install location
+
+
+6. What is the tools_upload_path?
+
+
+
+
+
+
+

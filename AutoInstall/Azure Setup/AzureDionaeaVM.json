@@ -32,7 +32,7 @@
   "provisioners": [
    {
      "type": "file",
-     "source": "scripts/Network.conf",
+     "source": "scripts/Azure_Network.conf",
      "destination": "/tmp/"
      },
     {
@@ -43,8 +43,8 @@
     {
       "type": "shell",
       "scripts": [
-        "scripts/open-vm-tools.sh", "scripts/Dionaea_Install.sh",
-        "scripts/open-vm-tools.sh", "scripts/Thug_Install.sh"
+        "scripts/Azure_Dionaea_Install.sh",
+        "scripts/Azure_Thug_Install.sh"
 
       ],
 

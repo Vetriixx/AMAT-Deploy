@@ -57,7 +57,9 @@ def post_file(api, n):
 	endpoint = 'http://fame_ip/analyses/'	#FAME IP/PORT
 	with open(n, 'rb') as f:
 		params = {
-		'groups': "cert"
+                'options[allow_internet_access]':  "on",
+                'options[analysis_time]': "100",
+                'groups': "cert"
 		}
 		files = {'file': f}
 		r = requests.post(endpoint, data=params, files=files, headers=headers)

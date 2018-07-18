@@ -35,18 +35,18 @@
   "provisioners": [
    {
      "type": "file",
-     "source": "scripts/Network.conf",
+     "source": "scripts/Azure_Network.conf",
      "destination": "/tmp/"
      },
     {
      "type": "file",
-     "source": "/home/user/Desktop/AMAT-Deploy/FAME/Modules",
+     "source": "/home/user/AMAT-Deploy/FAME/Modules/",
      "destination": "/home/fame"
      },
     {
       "type": "shell",
       "scripts": [
-      "scripts/FAME_Install.sh"
+      "scripts/Azure_FAME_Install.sh"
       ],
 
       "execute_command": "echo 'fame' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"

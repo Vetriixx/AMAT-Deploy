@@ -33,7 +33,7 @@ class CuckooModifi(ProcessingModule):
         {
             'name': 'host',
             'type': 'str',
-            'default': '192.168.54.51',
+            'default': 'cuck_ip',
             'description': 'Hostname or IP address of the Cuckoo Sandbox instance.'
         },
         {
@@ -99,6 +99,8 @@ class CuckooModifi(ProcessingModule):
         # First, submit the file / URL
         if file_type == 'url':
             self.submit_url(target, options)
+	elif file_type == 'executable':
+	    self.submit_windows(target, options)
         else:
             self.submit_file(target, options)
 
@@ -140,6 +142,13 @@ class CuckooModifi(ProcessingModule):
         url = urljoin(self.base_url, '/tasks/create/file')
         fp = open(filepath, 'rb')
 
+        response = requests.post(url, files={'file': fp}, data=options)
+        self.task_id = response.json()['task_ids'][0]
+
+    def submit_windows(self, filepath, options):
+        url = urljoin(self.base_url, '/tasks/create/file')
+        fp = open(filepath, 'rb')
+	options['platform'] = 'windows'
         response = requests.post(url, files={'file': fp}, data=options)
         self.task_id = response.json()['task_ids'][0]
 

@@ -3,7 +3,7 @@
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
-sudo apt-get install -y python-pip python-setuptools python-magic sqlite3 python3-pip libfuzzy-dev yara libyara-dev sshpass
+sudo apt-get install -y python-pip python-setuptools python-magic sqlite3 python3-pip libfuzzy-dev yara libyara-dev sshpass zip
 sudo pip install yapsy
 sudo pip install distorm3
 sudo pip install yara-python
@@ -11,9 +11,9 @@ sudo pip install simplejson
 sudo pip install pydeep
 sudo pip install bottle
 sudo pip install pefile
-
 git clone https://github.com/KoreLogicSecurity/mastiff.git
 find mastiff/mastiff.conf -type f -exec sed -i 's#yara_sigs = /usr/local/yara#yara_sigs = /usr/local/bin/#' {} \;
+source /tmp/Network.conf
 
 cat << EOT >> api.py
 #!flask/bin/python
@@ -67,7 +67,7 @@ def do_upload():
 
     os.system("cd /home/mastiff/mastiff/work/log/ && zip -r " + latest_analysis1 + " " + latest_analysis1)
 
-    os.system("sshpass -p fame scp -o StrictHostKeyChecking=no /home/mastiff/mastiff/work/log/" + latest_analysis1 + ".zip fame@192.168.54.85:/home/fame/fame/fame/modules/community/processing/mastiff/storage/ && sudo rm /home/mastiff/mastiff/work/log/" + latest_analysis1 + ".zip")
+    os.system("sshpass -p fame scp -o StrictHostKeyChecking=no /home/mastiff/mastiff/work/log/" + latest_analysis1 + ".zip fame@$fame_address:/home/fame/fame/fame/modules/community/processing/mastiff/storage/ && sudo rm /home/mastiff/mastiff/work/log/" + latest_analysis1 + ".zip")
 
     return jsonize({'message':'File successfully analysed'})
 
@@ -83,7 +83,6 @@ EOT
 
 mv api.py /home/mastiff/mastiff/
 
-cd /home/mastiff/mastiff && sudo make install 
-
+cd /home/mastiff/mastiff && sudo make install && mkdir work
 source /tmp/Network.conf
 cat /etc/network/interfaces | sudo sed -i s/dhcp/static/ > sudo /etc/network/interfaces; echo -e "     address $mas_address\n     netmask $mas_netmask\n     network $mas_network\n     broadcast $mas_broadcast\n     gateway $mas_gateway\n     dns-nameservers $mas_dns" | sudo tee -a /etc/network/interfaces

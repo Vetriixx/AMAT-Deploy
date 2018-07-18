@@ -34,7 +34,7 @@
   "provisioners": [
    {
      "type": "file",
-     "source": "scripts/Network.conf",
+     "source": "scripts/Azure_Network.conf",
      "destination": "/tmp/"
      },
      {
@@ -45,7 +45,7 @@
      {
       "type": "shell",
       "scripts": [
-      "scripts/Cuckoo_Install.sh"
+      "scripts/Azure_Cuckoo_Install.sh"
    ],
       "execute_command": "echo 'cuckoo' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
 }

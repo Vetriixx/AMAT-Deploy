@@ -32,13 +32,13 @@
   "provisioners": [
    {
      "type": "file",
-     "source": "scripts/Network.conf",
+     "source": "scripts/Azure_Network.conf",
      "destination": "/tmp/"
      },
     {
       "type": "shell",
       "scripts": [
-      "scripts/MISP_Part1.sh", "scripts/MISP_Part2.sh", "scripts/MISP_Part3.sh", "scripts/MISP_Part4.sh", "scripts/GPG_Creation.sh"
+      "scripts/Azure_MISP_Part1.sh", "scripts/Azure_MISP_Part2.sh", "scripts/Azure_MISP_Part3.sh", "scripts/Azure_MISP_Part4.sh", "scripts/Azure_GPG_Creation.sh"
       ],
       "execute_command": "echo 'misp' | {{ .Vars }} sudo -E -S bash '{{ .Path }}'"
     }

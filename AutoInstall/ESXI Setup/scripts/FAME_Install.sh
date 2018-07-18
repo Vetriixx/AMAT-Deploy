@@ -72,7 +72,7 @@ printf "upstream fame {\n\tserver unix:///tmp/fame.sock;\n}\n\nserver {\n\tliste
 sudo ln -s /etc/nginx/sites-available/fame /etc/nginx/sites-enabled/fame
 sudo systemctl restart nginx
 
-api="$(echo -e "use fame\ndb.users.distinct(\"api_key\")\n"" | mongo | grep -o '".*"' | sed 's/"//g')""
+api="$(echo -e "use fame\ndb.users.distinct(\"api_key\")\n" | mongo | grep -o '".*"' | sed 's/\"//g')"
 
 curl -XPOST -H "X-API-KEY: $api" 'http://127.0.0.1/modules/reload'
 
@@ -89,19 +89,22 @@ sudo systemctl start get_misp_api
 
 source /tmp/Network.conf
 #cuckoo.py
-sudo sed -i -e "s;cuckoo_ip;$cuck_address;;;" /home/fame/fame/fame/modules/community/processing/cuckoo_modifed/cuckoo.py
+sudo sed -i -e "36s/cuck_ip/$cuck_address/" /home/fame/fame/fame/modules/community/processing/cuckoo_modified/cuckoo.py
 
 #Mastiff.py
-sudo sed -i -e "s;mastiff_ip;$mas_address;;;" /home/fame/fame/fame/modules/community/processing/mastiff/Mastiff.py
+sudo sed -i -e "23s/mastiff_ip/$mas_address/" /home/fame/fame/fame/modules/community/processing/mastiff/Mastiff.py
+sudo sed -i -e "29s/mastiff_ip/$mas_address/" /home/fame/fame/fame/modules/community/processing/mastiff/Mastiff.py
 
 #viper.py
-sudo sed -i -e "s;viper_ip;$vip_address;;;" /home/fame/fame/fame/modules/community/processing/viper/viper.py
+sudo sed -i -e "23s/viper_ip/$vip_address/" /home/fame/fame/fame/modules/community/processing/viper/viper.py
+sudo sed -i -e "29s/viper_ip/$vip_address/" /home/fame/fame/fame/modules/community/processing/viper/viper.py
 
 #get_api.py
-sudo sed -i -e "s;misp_ip;$misp_address;;;" /home/fame/get_api.py
+sudo sed -i -e "10s/misp_ip/$misp_address/" /home/fame/get_api.py
 
 #MISPmod.py
-sudo sed -i -e "s;cuckoo_ip;$cuck_address;;;" /home/fame/fame/fame/modules/community/processing/cuckoo_modifed/MISPmod.py
-sudo sed -i -e "s;misp_ip;$misp_address;;;" /home/fame/fame/fame/modules/community/processing/cuckoo_modifed/MISPmod.py
+sudo sed -i -e "283s/cuckoo_ip/$cuck_address/" /home/fame/fame/fame/modules/community/processing/cuckoo_modified/MISPmod.py
+sudo sed -i -e "290s/cuckoo_ip/$cuck_address/" /home/fame/fame/fame/modules/community/processing/cuckoo_modified/MISPmod.py
+sudo sed -i -e "11s/misp_ip/$misp_address/" /home/fame/fame/fame/modules/community/processing/cuckoo_modified/MISPmod.py
 
 cat /etc/network/interfaces | sudo sed -i s/dhcp/static/ > sudo /etc/network/interfaces; echo -e "     address $fame_address\n     netmask $fame_netmask\n     network $fame_network\n     broadcast $fame_broadcast\n     gateway $fame_gateway\n     dns-nameservers $fame_dns" | sudo tee -a /etc/network/interfaces

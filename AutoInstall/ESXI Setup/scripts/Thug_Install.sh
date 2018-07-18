@@ -25,7 +25,7 @@ sudo python2.7 setup.py install
 cd ..
 sudo rm -rf pyv8
 
-sudo python2.7 -m pip install thug
+sudo python2.7 -m pip install thug --ignore-installed six
 
 sudo echo "/opt/libemu/lib/" > /etc/ld.so.conf.d/libemu.conf && ldconfig
 
@@ -33,10 +33,10 @@ sudo apt-get update
 sudo apt-get -y upgrade
 
 #Get Thugfeed and CustomUploader
-sudo mv ~/Dionaea_CustomUploader.py /usr/local/lib/python2.7/dist-packages/thug/Logging/CustomUploader.py
-sudo mv ~/compare.py /opt/thug/
-sudo mv ~/feedthug.sh /opt/thug/
-sudo mv ~/thug.conf /etc/init/
+sudo mv /home/dionaea/CustomUploader.py /usr/local/lib/python2.7/dist-packages/thug/Logging/CustomUploader.py
+sudo mv /home/dionaea/compare.py /opt/thug/
+sudo mv /home/dionaea/feedthug.sh /opt/thug/
+sudo mv /home/dionaea/thug.conf /etc/init/
 #sudo mv ~/feedthugLocal.sh /opt/thug/    #optional
 
 sudo chmod 775 /opt/thug/feedthug.sh

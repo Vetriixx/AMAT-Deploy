@@ -1,6 +1,6 @@
 {
-  "esxi_host": "##ESXi IP##",
-  "esxi_datastore": "ESXi Data Store##",
-  "esxi_username": "ESXi Root##",
-  "esxi_password": "##ESXi Password##"
+  "esxi_host": "192.168.58.45",
+  "esxi_datastore": "Local.HDD.datastore",
+  "esxi_username": "amat",
+  "esxi_password": "JungleButtPirat3s"
 }
